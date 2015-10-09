@@ -1,0 +1,9 @@
+{
+    "db": {
+    	"driver": "pdo_mysql",
+    	"user": "root",
+    	"host": "localhost",
+    	"dbname": "gb01",
+    	"charset": "utf8"
+    }
+}
