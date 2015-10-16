@@ -1,14 +1,25 @@
 {
     "name": "ethereal/SimpleTable",
     "type": "project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/mathus13/SimpleConfig.git"
+        },
+        {
+            "type": "vcs",
+            "url": "https://github.com/mathus13/SimpleCache.git"
+        }
+    ],
     "require": {
         "php": ">=5.3.9",
         "doctrine/dbal": "^2.6@dev",
+        "ethereal/SimpleCache": "dev-master",
+        "ethereal/SimpleConfig": "dev-master"
     },
     "require-dev": {
-        "phpunit/phpunit": "~4.8",
+        "phpunit/phpunit": "~4.8"
     },
-    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
             "Ethereal\\": "lib"
