@@ -14,8 +14,8 @@
     "require": {
         "php": ">=5.3.9",
         "doctrine/dbal": "^2.6@dev",
-        "ethereal/SimpleCache": "dev-master",
-        "ethereal/SimpleConfig": "dev-master"
+        "ethereal/SimpleCache": "^0.*",
+        "ethereal/SimpleConfig": "^0.*"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.8"
