@@ -5,16 +5,11 @@
         {
             "type": "vcs",
             "url": "https://github.com/mathus13/SimpleConfig.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/mathus13/SimpleCache.git"
         }
     ],
     "require": {
         "php": ">=5.3.9",
         "doctrine/dbal": "^2.6@dev",
-        "ethereal/SimpleCache": "0.1.x-dev",
         "ethereal/SimpleConfig": "0.1.x-dev"
     },
     "require-dev": {
