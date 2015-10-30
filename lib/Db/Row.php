@@ -6,16 +6,16 @@ use Ethereal\Db\Table;
 
 class Row
 {
-	protected $data = array();
-	protected $table;
+    protected $data = array();
+    protected $table;
 
-	public function __construct($data, Table $table)
-	{
-		foreach ($data as $key => $value) {
-			$this->data[$key] = $value;
-		}
-		$this->table = $table;
-	}
+    public function __construct($data, Table $table)
+    {
+        foreach ($data as $key => $value) {
+            $this->data[$key] = $value;
+        }
+        $this->table = $table;
+    }
 
     /**
      * Gets the value of table.
@@ -34,15 +34,15 @@ class Row
      */
     public function __get($name)
     {
-    	if (isset($this->data[$name])) {
-    		return $this->data[$name];
-    	}
-    	return null;
+        if (isset($this->data[$name])) {
+            return $this->data[$name];
+        }
+        return null;
     }
 
     public function save()
     {
-    	$this->table->save($this);
+        $this->table->save($this);
     }
 
     /**
@@ -53,5 +53,15 @@ class Row
     public function getData()
     {
         return $this->data;
+    }
+
+    public function toArray()
+    {
+        return $this->getData();
+    }
+
+    public function __toString()
+    {
+        return json_encode($this->_getData());
     }
 }
