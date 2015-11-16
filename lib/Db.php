@@ -42,14 +42,6 @@ class Db
      */
     public function __call($method, $params)
     {
-        if (method_exists($this->Db, $method)) {
-            try {
-                return call_user_func_array(array($this->Db, $method), $params);
-            } catch (\Exception $e) {
-                
-            }
-        } else {
-            throw new \Exception("Method {$method} does not exist in DB");
-        }
+        return call_user_func_array(array($this->Db, $method), $params);
     }
 }

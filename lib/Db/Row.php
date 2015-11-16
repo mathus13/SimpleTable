@@ -4,12 +4,12 @@ namespace Ethereal\Db;
 
 use Ethereal\Db\Table;
 
-class Row
+class Row implements RowInterface
 {
     protected $data = array();
     protected $table;
 
-    public function __construct($data, Table $table)
+    public function __construct($data, TableInterface $table)
     {
         foreach ($data as $key => $value) {
             $this->data[$key] = $value;
@@ -40,6 +40,11 @@ class Row
         return null;
     }
 
+    public function __set($key, $value)
+    {
+        $this->data[$key] = $value;
+    }
+
     public function save()
     {
         $this->table->save($this);
@@ -62,6 +67,6 @@ class Row
 
     public function __toString()
     {
-        return json_encode($this->_getData());
+        return json_encode($this->getData());
     }
 }

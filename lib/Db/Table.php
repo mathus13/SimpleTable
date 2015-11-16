@@ -12,22 +12,24 @@ use Ethereal\Db\Row as Row;
  * \Ethereal\Db\Table
  * Generic table class modeled with Doctrine DBAL
  * @author Shawn Barratt
- * 
+ *
  */
-class Table
+class Table implements TableInterface
 {
-    private $db;
+    protected $db;
     protected $table;
     protected $rowClass = 'Ethereal\Db\Row';
 
-    public function __construct(Db $db, $table)
+    public function __construct(Db $db, $table = null)
     {
         $this->db = $db;
-        $rows = $this->db->executeQuery('SHOW TABLES LIKE ?', array($table));
-        if (!$rows->fetch()) {
-            throw new InvalidTableException("Table {$table} does not exist in {$this->db->getDatabase()} on {$this->db->getHost()}");
+        if ($table) {
+            $this->table = $table;
         }
-        $this->table = $table;
+        $rows = $this->db->executeQuery('SHOW TABLES LIKE ?', array($this->table));
+        if (!$rows) {
+            throw new InvalidTableException("Table {$this->table} does not exist in {$this->db->getDatabase()} on {$this->db->getHost()}");
+        }
     }
 
     /**
@@ -35,7 +37,7 @@ class Table
      * @return Doctrine\DBAL\QueryBuilder
      * @see http://docs.doctrine-project.org/projects/doctrine-dbal/en/latest/reference/query-builder.html
      */
-    private function qb()
+    protected function qb()
     {
         return $this->db->createQueryBuilder();
     }
@@ -64,13 +66,17 @@ class Table
     {
         $update =  $this->qb()->update($this->table);
         foreach ($data as $k => $v) {
-            $update->set($k, $v);
+            $update->set(
+                $this->db->quoteIdentifier($k),
+                $this->db->quote($v)
+            );
         }
-        $where_values = array_values($where);
-        foreach ($where as $stmt => $v) {
-            $update->where($statement);
+        $x = 0;
+        foreach ($where as $stmt) {
+            $update->where($stmt);
         }
-        return $this->db->executeUpdate($update, $where_values);
+        error_log($update);
+        return $this->db->executeUpdate($update);
     }
 
     public function getAll()
@@ -112,7 +118,7 @@ class Table
         return $stmt->execute();
     }
 
-    public function save(Row $row)
+    public function save(RowInterface $row)
     {
         $key = $this->getPrimaryKey();
         if ($row->{$key}) {
@@ -121,8 +127,16 @@ class Table
         return $this->insert($row->getData());
     }
 
+    public function create($data = array())
+    {
+        $class = $this->rowClass;
+        return new $class($data, $this);
+    }
+
     protected function getPrimaryKey()
     {
-        return $this->query("SHOW KEYS FROM ? WHERE Key_name = 'PRIMARY'", array($this->table));
+        $query = $this->db->fetchAll("SHOW KEYS FROM `{$this->table}` WHERE Key_name = 'PRIMARY'");
+        $row = $query;
+        return $row[0]['Column_name'];
     }
 }
