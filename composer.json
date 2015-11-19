@@ -9,7 +9,7 @@
     ],
     "require": {
         "php": ">=5.3.9",
-        "doctrine/dbal": "^2.6@dev",
+        "doctrine/dbal": "2.5.x-dev",
         "ethereal/SimpleConfig": "0.1.x-dev"
     },
     "require-dev": {
