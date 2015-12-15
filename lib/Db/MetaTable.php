@@ -1,7 +1,7 @@
 <?php
 namespace Ethereal\Db;
 
-use Table;
+use Ethereal\Db\Table;
 use Ramsey\Uuid\Uuid;
 
 class MetaTable extends Table implements TableInterface

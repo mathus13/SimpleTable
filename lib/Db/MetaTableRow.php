@@ -2,9 +2,9 @@
 
 namespace Ethereal\Db;
 
-use MetaTable;
-use Row;
-use RowInterface;
+use Ethereal\Db\MetaTable;
+use Ethereal\Db\Row;
+use Ethereal\Db\RowInterface;
 
 class MetaTableRow extends Row implements RowInterface
 {
