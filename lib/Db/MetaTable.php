@@ -8,7 +8,7 @@ class MetaTable extends Table implements TableInterface
 {
     protected $columns = array();
 
-    private function getSearchQB()
+    protected function getSearchQB()
     {
         $search = $this->qb()->select('clients.*, GROUP_CONCAT(md_name,\'::\',md_value separator \'||\') AS meta_data');
         $search->from($this->table, 'clients')
